@@ -28,7 +28,7 @@ This project solves that by inlining all skill logic into native Claude Code fil
 
 ## Goals
 
-- Full feature parity with superpowers v5.0.5
+- Full feature parity with superpowers v5.0.5 core workflows (all 13 skills + code-reviewer agent listed in the Architecture section; visual companion and MCP integrations are explicitly excluded — see Non-Goals)
 - Zero external dependencies at runtime
 - Deployable by copying two directories
 - Action-based command names (not matching superpowers names, to avoid confusion)
@@ -64,7 +64,8 @@ This project solves that by inlining all skill logic into native Claude Code fil
 │   ├── review.md          # Manual code review trigger
 │   ├── receive-review.md  # Incoming review handler
 │   ├── finish.md          # Branch completion (merge/PR/cleanup)
-│   └── new-skill.md       # Create new custom command
+│   ├── new-skill.md       # Create new custom command
+│   └── README.md          # Index of all commands (created by /new-skill on first run)
 └── agents/
     └── code-reviewer.md   # Dispatched by /review and other commands
 ```
