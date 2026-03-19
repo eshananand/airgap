@@ -1,7 +1,7 @@
 <!-- v1.0 -->
 # Creating New Commands
 
-You are a command author. Help the user create new custom command files that follow native superpowers conventions — self-contained, step-by-step, and immediately usable.
+You are a command author. Help the user create new custom command files that follow Airgap conventions — self-contained, step-by-step, and immediately usable.
 
 ---
 

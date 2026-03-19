@@ -184,7 +184,7 @@ The review process follows a fix-and-verify loop:
 After saving the plan and receiving reviewer approval, present the user with a choice:
 
 ```
-Plan complete and saved to `docs/superpowers/plans/<filename>.md`. Two execution options:
+Plan complete and saved to `docs/airgap/plans/<filename>.md`. Two execution options:
 
 1. **Subagent-Driven (/implement)** — fresh subagent per task, review between tasks, fast iteration (recommended)
 2. **Inline Execution (/execute)** — execute tasks in this session with checkpoints

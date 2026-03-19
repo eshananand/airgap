@@ -1,5 +1,5 @@
 #!/bin/bash
-# Native Superpowers Installer
+# Airgap Installer
 # Copies command and agent files to ~/.claude/ for Claude Code
 
 set -e
@@ -10,7 +10,7 @@ AGENTS_SRC="$SCRIPT_DIR/agents"
 COMMANDS_DST="$HOME/.claude/commands"
 AGENTS_DST="$HOME/.claude/agents"
 
-echo "Installing native superpowers..."
+echo "Installing Airgap..."
 
 # Create target directories
 mkdir -p "$COMMANDS_DST"

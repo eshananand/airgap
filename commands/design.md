@@ -23,7 +23,7 @@ Complete these in order. Do not skip steps.
 2. **Ask clarifying questions** — one at a time, prefer multiple choice, understand purpose/constraints/success criteria
 3. **Propose 2–3 approaches** — with trade-offs and your recommendation
 4. **Present design** — in sections scaled to complexity, get user approval after each section
-5. **Write design doc** — save to `docs/superpowers/specs/YYYY-MM-DD-<topic>-design.md` and commit
+5. **Write design doc** — save to `docs/airgap/specs/YYYY-MM-DD-<topic>-design.md` and commit
 6. **Spec review loop** — dispatch `code-reviewer` agent with spec-review context; fix issues and re-dispatch until approved (max 3 iterations, then surface to user)
 7. **User reviews written spec** — ask user to review, then hand off to `/plan`
 
@@ -126,7 +126,7 @@ Smaller, well-bounded units are easier to implement, test, and change later.
 
 Once the user approves the full design, write the spec:
 
-- Save to `docs/superpowers/specs/YYYY-MM-DD-<topic>-design.md`
+- Save to `docs/airgap/specs/YYYY-MM-DD-<topic>-design.md`
 - Use today's date and a descriptive topic slug
 - Commit to git with a message describing the spec
 

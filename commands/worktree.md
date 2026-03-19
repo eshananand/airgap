@@ -36,7 +36,7 @@ If no existing directory or preference is found, offer two options:
 | Option | Path | Description |
 |--------|------|-------------|
 | **Project-local (hidden)** | `.worktrees/` | Lives inside the project, hidden from directory listings |
-| **Global** | `~/.config/superpowers/worktrees/<project-name>/` | Shared location outside the project |
+| **Global** | `~/.config/airgap/worktrees/<project-name>/` | Shared location outside the project |
 
 ---
 
@@ -80,7 +80,7 @@ git worktree add ".worktrees/$BRANCH_NAME" -b "$BRANCH_NAME"
 **Global:**
 
 ```bash
-git worktree add "$HOME/.config/superpowers/worktrees/$project/$BRANCH_NAME" -b "$BRANCH_NAME"
+git worktree add "$HOME/.config/airgap/worktrees/$project/$BRANCH_NAME" -b "$BRANCH_NAME"
 ```
 
 ### Step 3: Run Project Setup
