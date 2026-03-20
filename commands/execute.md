@@ -1,3 +1,6 @@
+---
+description: Inline plan execution with review gates and progress tracking
+---
 <!-- v1.0 -->
 # Executing Plans
 
@@ -76,5 +79,5 @@ Do not force through blockers. If the plan is wrong, fix the plan first.
 ## Integration
 
 - **Requires `/worktree`** — create an isolated workspace before starting execution.
-- **Requires `/plan`** — this command executes plans created by `/plan`.
+- **Requires `/ag-plan`** — this command executes plans created by `/ag-plan`.
 - **Calls `/finish`** — after all tasks are complete, hand off to `/finish` for branch completion.

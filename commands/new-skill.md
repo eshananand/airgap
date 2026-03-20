@@ -1,3 +1,6 @@
+---
+description: Create new custom commands following Airgap conventions
+---
 <!-- v1.0 -->
 # Creating New Commands
 
@@ -32,7 +35,7 @@ You are a command author. Help the user create new custom command files that fol
 
 ## Self-Containment Rules
 
-Commands must be entirely self-contained. Claude reads only the command file when invoked. **No external file reads, no web fetches, no git dependencies** — inline all checklists, examples, and templates directly. Cross-references to other commands use `/command-name` format (e.g., "hand off to `/plan`") since those are invoked separately.
+Commands must be entirely self-contained. Claude reads only the command file when invoked. **No external file reads, no web fetches, no git dependencies** — inline all checklists, examples, and templates directly. Cross-references to other commands use `/command-name` format (e.g., "hand off to `/ag-plan`") since those are invoked separately.
 
 ---
 

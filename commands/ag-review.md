@@ -1,3 +1,6 @@
+---
+description: Trigger code-reviewer agent for quality review with iterative feedback
+---
 <!-- v1.0 -->
 # Requesting Code Review
 
@@ -199,7 +202,7 @@ Review is built into the /implement loop. After completing each task, request a 
 When running parallel tasks via /execute, request review after each batch completes. Review the combined output of the batch before starting the next one.
 
 ### Ad-hoc
-Use /review any time outside of structured workflows:
+Use /ag-review any time outside of structured workflows:
 - **Before merge to main** — final review of the full branch
 - **When stuck** — get a second opinion on your approach
 - **After complex debugging** — verify the fix is sound

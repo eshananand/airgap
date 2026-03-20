@@ -383,7 +383,7 @@
         <br>
         <span style="color: var(--text-dim);">&ldquo;debug this bug&rdquo;</span> <span class="arrow">&rarr;</span> <span class="cmd">/debug</span> workflow<br>
         <span style="color: var(--text-dim);">&ldquo;write tests for this&rdquo;</span> <span class="arrow">&rarr;</span> <span class="cmd">/test</span> workflow<br>
-        <span style="color: var(--text-dim);">&ldquo;review my code&rdquo;</span> <span class="arrow">&rarr;</span> <span class="cmd">/review</span> workflow<br>
+        <span style="color: var(--text-dim);">&ldquo;review my code&rdquo;</span> <span class="arrow">&rarr;</span> <span class="cmd">/ag-review</span> workflow<br>
         <span style="color: var(--text-dim);">&ldquo;is this ready to deploy?&rdquo;</span> <span class="arrow">&rarr;</span> <span class="cmd">/preflight</span> workflow<br>
         <span style="color: var(--text-dim);">&ldquo;scan for leaked secrets&rdquo;</span> <span class="arrow">&rarr;</span> <span class="cmd">/scan-secrets</span> workflow<br>
       </div>
@@ -409,14 +409,14 @@
         <div class="card-desc">Brainstorming &rarr; design &rarr; spec workflow. Guides a structured conversation from raw idea to approved design spec with clarifying questions, trade-off analysis, and iterative section approval.</div>
         <div class="card-tags">
           <span class="tag gate">Hard gate: no code before approval</span>
-          <span class="tag chain">&rarr; /threat-model &rarr; /plan</span>
+          <span class="tag chain">&rarr; /threat-model &rarr; /ag-plan</span>
         </div>
       </div>
 
       <div class="card">
         <div class="card-header">
           <div class="card-icon blue">&#x1f4cb;</div>
-          <div class="card-name">/plan</div>
+          <div class="card-name">/ag-plan</div>
         </div>
         <div class="card-desc">Takes an approved spec and produces a detailed implementation plan with atomic, bite-sized tasks. Includes file structure mapping, exact code, test commands, and dependency ordering.</div>
         <div class="card-tags">
@@ -442,14 +442,14 @@
         </div>
         <div class="card-desc">Subagent-driven plan execution &mdash; the recommended method. Dispatches a fresh subagent per task with two-stage review: spec compliance first, then code quality. Inlines all prompt templates.</div>
         <div class="card-tags">
-          <span class="tag chain">&rarr; /review &rarr; /finish</span>
+          <span class="tag chain">&rarr; /ag-review &rarr; /finish</span>
         </div>
       </div>
 
       <div class="card">
         <div class="card-header">
           <div class="card-icon blue">&#x1f50d;</div>
-          <div class="card-name">/review</div>
+          <div class="card-name">/ag-review</div>
         </div>
         <div class="card-desc">Manually triggers the code-reviewer agent for quality review. Identifies scope, provides context about what was built and which plan it implements, then iterates until clean.</div>
         <div class="card-tags">
@@ -513,16 +513,16 @@
         <div class="card-desc">STRIDE-based threat modeling. Maps assets, entry points, and trust boundaries, then systematically analyzes Spoofing, Tampering, Repudiation, Information Disclosure, DoS, and Elevation of Privilege.</div>
         <div class="card-tags">
           <span class="tag">likelihood &times; impact matrix</span>
-          <span class="tag chain">/design &rarr; here &rarr; /plan</span>
+          <span class="tag chain">/design &rarr; here &rarr; /ag-plan</span>
         </div>
       </div>
 
       <div class="card">
         <div class="card-header">
           <div class="card-icon red">&#x1f6a8;</div>
-          <div class="card-name">/security-review</div>
+          <div class="card-name">/ag-security-review</div>
         </div>
-        <div class="card-desc">OWASP Top 10 focused security code review. Hunts for injection, XSS, broken auth, access control issues, and more. Distinct from /review which checks code quality.</div>
+        <div class="card-desc">OWASP Top 10 focused security code review. Hunts for injection, XSS, broken auth, access control issues, and more. Distinct from /ag-review which checks code quality.</div>
         <div class="card-tags">
           <span class="tag">CWE references</span>
           <span class="tag">severity ratings</span>
@@ -549,7 +549,7 @@
         <div class="card-desc">Structured, blameless incident analysis. Builds timelines, uses 5-Whys for root cause, separates contributing factors, and produces action items with owners, deadlines, and priorities.</div>
         <div class="card-tags">
           <span class="tag">blameless culture</span>
-          <span class="tag chain">action items &rarr; /plan</span>
+          <span class="tag chain">action items &rarr; /ag-plan</span>
         </div>
       </div>
 
@@ -702,7 +702,7 @@
           <div class="card-icon purple">&#x1f916;</div>
           <div class="card-name">code-reviewer <span>(agent)</span></div>
         </div>
-        <div class="card-desc">General-purpose review agent dispatched by /review, /design, /plan, /implement, and /security-review. Context passed at dispatch time determines what it reviews: spec, plan, code quality, or security.</div>
+        <div class="card-desc">General-purpose review agent dispatched by /ag-review, /design, /ag-plan, /implement, and /ag-security-review. Context passed at dispatch time determines what it reviews: spec, plan, code quality, or security.</div>
         <div class="card-tags">
           <span class="tag">4 review modes</span>
           <span class="tag">APPROVED or ISSUES FOUND</span>
@@ -716,12 +716,12 @@
   <div class="chain-section">
     <h3>Command Chaining</h3>
     <div class="chain-flow">
-      <span class="cmd">/design</span> <span class="arrow">&rarr;</span> <span class="cmd optional">/threat-model</span> <span class="arrow">&rarr;</span> <span class="cmd">/plan</span> <span class="arrow">&rarr;</span> <span class="cmd">/execute</span> or <span class="cmd">/implement</span><br>
-      <span class="cmd">/debug</span> <span class="arrow">&rarr;</span> fix <span class="arrow">&rarr;</span> <span class="cmd">/verify</span> <span class="arrow">&rarr;</span> <span class="cmd">/review</span> <span class="arrow">&rarr;</span> <span class="cmd optional">/security-review</span> <span class="arrow">&rarr;</span> <span class="cmd">/finish</span><br>
-      <span class="cmd">/test</span> <span class="arrow">&rarr;</span> <span class="cmd">/verify</span> <span class="arrow">&rarr;</span> <span class="cmd">/review</span> <span class="arrow">&rarr;</span> <span class="cmd">/finish</span><br>
+      <span class="cmd">/design</span> <span class="arrow">&rarr;</span> <span class="cmd optional">/threat-model</span> <span class="arrow">&rarr;</span> <span class="cmd">/ag-plan</span> <span class="arrow">&rarr;</span> <span class="cmd">/execute</span> or <span class="cmd">/implement</span><br>
+      <span class="cmd">/debug</span> <span class="arrow">&rarr;</span> fix <span class="arrow">&rarr;</span> <span class="cmd">/verify</span> <span class="arrow">&rarr;</span> <span class="cmd">/ag-review</span> <span class="arrow">&rarr;</span> <span class="cmd optional">/ag-security-review</span> <span class="arrow">&rarr;</span> <span class="cmd">/finish</span><br>
+      <span class="cmd">/test</span> <span class="arrow">&rarr;</span> <span class="cmd">/verify</span> <span class="arrow">&rarr;</span> <span class="cmd">/ag-review</span> <span class="arrow">&rarr;</span> <span class="cmd">/finish</span><br>
       <span class="cmd">/scan-secrets</span> <span class="arrow">&rarr;</span> <span class="cmd">/preflight</span> <span class="arrow">&rarr;</span> <span class="cmd">/finish</span><br>
       <span class="cmd">/audit-deps</span> <span class="arrow">&rarr;</span> <span class="cmd">/preflight</span> <span class="arrow">&rarr;</span> <span class="cmd">/finish</span><br>
-      <span class="cmd">/postmortem</span> <span class="arrow">&rarr;</span> action items <span class="arrow">&rarr;</span> <span class="cmd">/plan</span><br>
+      <span class="cmd">/postmortem</span> <span class="arrow">&rarr;</span> action items <span class="arrow">&rarr;</span> <span class="cmd">/ag-plan</span><br>
       <span class="cmd">/worktree</span> <span class="arrow">&rarr;</span> [feature work] <span class="arrow">&rarr;</span> <span class="cmd">/finish</span><br>
     </div>
     <p style="margin-top: 16px; font-size: 13px; color: var(--text-dim);"><em style="color: var(--amber);">Italic</em> commands are optional but recommended in the chain.</p>

@@ -1,3 +1,6 @@
+---
+description: Scan codebase for leaked credentials, API keys, and tokens
+---
 <!-- v1.0 -->
 # Scan for Leaked Secrets
 

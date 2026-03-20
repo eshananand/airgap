@@ -1,3 +1,6 @@
+---
+description: Systematic 4-phase debugging with root cause analysis before fixes
+---
 <!-- v1.0 -->
 # Systematic Debugging
 

@@ -48,10 +48,10 @@ This removes the airgap routing section from your project's CLAUDE.md, preservin
 | Command | Description |
 |---------|-------------|
 | `/design` | Brainstorm → design → spec. Structured conversation from idea to approved design with trade-off analysis and iterative approval. |
-| `/plan` | Takes an approved spec and produces a detailed implementation plan with atomic tasks, file mappings, and dependency ordering. |
+| `/ag-plan` | Takes an approved spec and produces a detailed implementation plan with atomic tasks, file mappings, and dependency ordering. |
 | `/execute` | Inline plan execution with review gates. Runs steps sequentially, tracks progress, surfaces blockers. |
 | `/implement` | Subagent-driven plan execution. Dispatches a fresh subagent per task with two-stage review (spec compliance + code quality). |
-| `/review` | Triggers the code-reviewer agent for quality review. Iterates until clean (max 3 rounds). |
+| `/ag-review` | Triggers the code-reviewer agent for quality review. Iterates until clean (max 3 rounds). |
 | `/receive-review` | Structured process for handling incoming review feedback. No blind implementation — every suggestion gets evaluated. |
 | `/finish` | Branch completion with 4 options: merge locally, open PR, keep as-is, or discard. Cleans up worktrees. |
 
@@ -61,7 +61,7 @@ This removes the airgap routing section from your project's CLAUDE.md, preservin
 |---------|-------------|
 | `/scan-secrets` | Scans for leaked credentials before they reach git. Detects API keys, tokens, passwords, and private keys across major providers. |
 | `/threat-model` | STRIDE-based threat modeling. Maps assets, entry points, and trust boundaries with likelihood × impact scoring. |
-| `/security-review` | OWASP Top 10 focused security code review with CWE references and severity ratings. |
+| `/ag-security-review` | OWASP Top 10 focused security code review with CWE references and severity ratings. |
 | `/preflight` | Pre-deploy go/no-go gate. Orchestrates `/verify`, `/scan-secrets`, and `/audit-deps` into a single safety checklist. |
 | `/postmortem` | Blameless incident analysis with 5-Whys root cause, timelines, and action items with owners and deadlines. |
 | `/audit-deps` | Dependency vulnerability and license audit. Auto-detects package managers, checks CVEs and typosquatting indicators. |
@@ -88,25 +88,25 @@ This removes the airgap routing section from your project's CLAUDE.md, preservin
 
 | Agent | Description |
 |-------|-------------|
-| `code-reviewer` | Shared review engine dispatched by `/review`, `/design`, `/plan`, `/implement`, and `/security-review`. Review mode is determined by context passed at dispatch time. |
+| `code-reviewer` | Shared review engine dispatched by `/ag-review`, `/design`, `/ag-plan`, `/implement`, and `/ag-security-review`. Review mode is determined by context passed at dispatch time. |
 
 ## Command Chaining
 
 Commands are designed to flow into each other:
 
 ```
-/design → /threat-model (optional) → /plan → /execute or /implement
-/debug → fix → /verify → /review → /security-review (optional) → /finish
-/test → /verify → /review → /finish
+/design → /threat-model (optional) → /ag-plan → /execute or /implement
+/debug → fix → /verify → /ag-review → /ag-security-review (optional) → /finish
+/test → /verify → /ag-review → /finish
 /scan-secrets → /preflight → /finish
 /audit-deps → /preflight → /finish
-/postmortem → action items → /plan
+/postmortem → action items → /ag-plan
 /worktree → [feature work] → /finish
 
 # With auto-activation (/activate):
 "debug this bug" → auto-invokes /debug workflow
 "write tests"    → auto-invokes /test workflow
-"review my code" → auto-invokes /review workflow
+"review my code" → auto-invokes /ag-review workflow
 ```
 
 ## How It Works

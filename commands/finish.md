@@ -1,3 +1,6 @@
+---
+description: Branch completion with merge, PR, keep, or discard options
+---
 <!-- v1.0 -->
 # Finishing a Development Branch
 

@@ -1,3 +1,6 @@
+---
+description: Handle incoming review feedback with structured evaluation
+---
 <!-- v1.0 -->
 # Code Review Reception
 

@@ -78,12 +78,12 @@ The routing section written into CLAUDE.md contains:
 | debug, fix bug, investigate, root cause, why is this broken | `/debug` | Systematic 4-phase debugging |
 | write tests, add tests, TDD, test this | `/test` | Red-green-refactor TDD |
 | verify, check if it works, confirm it's working, does this work | `/verify` | Evidence-based verification |
-| review code, code review, review this, check my code | `/review` | Code reviewer agent dispatch |
+| review code, code review, review this, check my code | `/ag-review` | Code reviewer agent dispatch |
 | scan for secrets, check credentials, leaked keys | `/scan-secrets` | Credential detection |
-| security review, OWASP, vulnerabilities, security audit | `/security-review` | OWASP Top 10 audit |
+| security review, OWASP, vulnerabilities, security audit | `/ag-security-review` | OWASP Top 10 audit |
 | threat model, attack surface, security threats | `/threat-model` | STRIDE threat modeling |
 | design, brainstorm, new feature idea, let's think through | `/design` | Idea to spec |
-| plan, break down, implementation plan, how to build | `/plan` | Spec to implementation plan |
+| plan, break down, implementation plan, how to build | `/ag-plan` | Spec to implementation plan |
 | implement, build it, execute the plan, start building | `/implement` | Subagent-driven execution |
 | execute, run the plan, do it inline | `/execute` | Inline plan execution |
 | finish, merge, PR, done with branch, wrap up | `/finish` | Branch completion |

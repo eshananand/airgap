@@ -1,3 +1,6 @@
+---
+description: Blameless incident analysis with 5-Whys root cause and action items
+---
 <!-- v1.0 -->
 # Structured Incident Postmortem
 
@@ -150,7 +153,7 @@ Use the template below.
 
 ### Phase 7: Hand Off Action Items
 
-If any action items require code changes, hand them off to `/plan` for implementation planning. Reference the postmortem file path so the plan has full context.
+If any action items require code changes, hand them off to `/ag-plan` for implementation planning. Reference the postmortem file path so the plan has full context.
 
 ---
 
@@ -335,7 +338,7 @@ Watch for these during the postmortem process. Each one indicates the analysis i
 
 ## Integration with Other Commands
 
-- **Action items requiring code changes** — hand off to `/plan` with the postmortem as context
+- **Action items requiring code changes** — hand off to `/ag-plan` with the postmortem as context
 - **Debugging during incident investigation** — use `/debug` for systematic root cause analysis
 - **Implementing fixes** — use `/implement` for the code changes identified in action items
 - **Verifying fixes** — use `/verify` to confirm action items are properly addressed

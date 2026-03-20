@@ -1,3 +1,6 @@
+---
+description: TDD red-green-refactor discipline — no code without a failing test first
+---
 <!-- v1.0 -->
 # Test-Driven Development (TDD)
 

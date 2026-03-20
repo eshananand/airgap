@@ -1,3 +1,6 @@
+---
+description: Dependency vulnerability and license audit across package managers
+---
 <!-- v1.0 -->
 # Dependency Audit for Security and License Risks
 
@@ -219,8 +222,8 @@ Project license: <license>
 ### /preflight
 `/audit-deps` feeds directly into `/preflight`. When `/preflight` runs its pre-merge checks, it should invoke or reference the output of `/audit-deps`. Any CRITICAL or HIGH finding from `/audit-deps` is a `/preflight` blocker.
 
-### /review
-License and security findings from `/audit-deps` should inform `/review` when new dependencies are added. If a PR introduces a new dependency, `/audit-deps` findings for that package are review-relevant.
+### /ag-review
+License and security findings from `/audit-deps` should inform `/ag-review` when new dependencies are added. If a PR introduces a new dependency, `/audit-deps` findings for that package are review-relevant.
 
 ### /implement
 During `/implement`, if a new dependency is added, run `/audit-deps` before proceeding to the next task. Catching a bad dependency mid-implementation is cheaper than catching it at merge time.

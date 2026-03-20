@@ -1,3 +1,6 @@
+---
+description: Brainstorm ideas into approved design specs through structured dialogue
+---
 <!-- v1.0 -->
 # Brainstorming Ideas Into Designs
 
@@ -25,7 +28,7 @@ Complete these in order. Do not skip steps.
 4. **Present design** — in sections scaled to complexity, get user approval after each section
 5. **Write design doc** — save to `docs/airgap/specs/YYYY-MM-DD-<topic>-design.md` and commit
 6. **Spec review loop** — dispatch `code-reviewer` agent with spec-review context; fix issues and re-dispatch until approved (max 3 iterations, then surface to user)
-7. **User reviews written spec** — ask user to review, then hand off to `/plan`
+7. **User reviews written spec** — ask user to review, then hand off to `/ag-plan`
 
 ---
 
@@ -174,7 +177,7 @@ Wait for the user to confirm. Do not proceed until they do.
 
 ### Implementation
 
-Hand off to `/plan` to create the implementation plan. Do NOT invoke any other command.
+Hand off to `/ag-plan` to create the implementation plan. Do NOT invoke any other command.
 
 ---
 
@@ -211,5 +214,5 @@ Hand off to `/plan` to create the implementation plan. Do NOT invoke any other c
 ## Integration
 
 - This command is the entry point for new work. It produces a spec.
-- The spec feeds into `/plan` which creates the implementation plan.
+- The spec feeds into `/ag-plan` which creates the implementation plan.
 - This command is self-contained and can be invoked independently.

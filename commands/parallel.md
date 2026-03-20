@@ -1,3 +1,6 @@
+---
+description: Decompose independent tasks into parallel subagents
+---
 <!-- v1.0 -->
 # Dispatching Parallel Agents
 

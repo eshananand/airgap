@@ -1,9 +1,12 @@
+---
+description: OWASP Top 10 security audit with CWE references and severity ratings
+---
 <!-- v1.0 -->
 # OWASP-Focused Security Code Review
 
 Core principle: **Security is not optional, and it is not the same as code quality.**
 
-`/security-review` performs a dedicated security audit against the OWASP Top 10. It is independent of `/review` (which focuses on code quality, architecture, and correctness). You can and should run both.
+`/ag-security-review` performs a dedicated security audit against the OWASP Top 10. It is independent of `/ag-review` (which focuses on code quality, architecture, and correctness). You can and should run both.
 
 ---
 
@@ -431,31 +434,31 @@ EXECUTE sp_executesql N'SELECT * FROM users WHERE name = @name',
 
 ## Integration with Other Commands
 
-### Independent of /review
+### Independent of /ag-review
 
-`/security-review` is a separate, focused audit. It does not replace `/review` and `/review` does not replace it. Run both:
+`/ag-security-review` is a separate, focused audit. It does not replace `/ag-review` and `/ag-review` does not replace it. Run both:
 
-- `/review` checks code quality, architecture, correctness, and tests
-- `/security-review` checks for vulnerabilities against OWASP Top 10
+- `/ag-review` checks code quality, architecture, correctness, and tests
+- `/ag-security-review` checks for vulnerabilities against OWASP Top 10
 
 There is no conflict in running them on the same code. They look for different things.
 
 ### With /implement
 
-During `/implement`, consider running `/security-review` after tasks that touch:
+During `/implement`, consider running `/ag-security-review` after tasks that touch:
 - Authentication or authorization logic
 - User input handling
 - Database queries
 - File operations
 - External API integrations
 
-### With /plan
+### With /ag-plan
 
-When creating a plan with `/plan`, include security requirements in the plan itself. This makes security part of the design rather than an afterthought.
+When creating a plan with `/ag-plan`, include security requirements in the plan itself. This makes security part of the design rather than an afterthought.
 
 ### With /verify
 
-After fixing security findings, use `/verify` to confirm the fixes pass tests and do not break functionality before re-running `/security-review`.
+After fixing security findings, use `/verify` to confirm the fixes pass tests and do not break functionality before re-running `/ag-security-review`.
 
 ---
 
@@ -513,5 +516,5 @@ After fixing security findings, use `/verify` to confirm the fixes pass tests an
 
 6. Reviewer returns: SECURE
 
-7. Proceed with /review for code quality, then merge.
+7. Proceed with /ag-review for code quality, then merge.
 ```

@@ -1,3 +1,6 @@
+---
+description: STRIDE-based threat modeling with likelihood and impact scoring
+---
 <!-- v1.0 -->
 # STRIDE Threat Modeling
 
@@ -21,7 +24,7 @@ Complete these in order. Do not skip steps.
 4. **Rate each threat** — likelihood x impact
 5. **Propose mitigations** — for all high and critical priority threats
 6. **Write threat model** — save to `docs/airgap/threats/YYYY-MM-DD-<topic>-threat-model.md`
-7. **Hand off to `/plan`** — with threats as constraints on the implementation
+7. **Hand off to `/ag-plan`** — with threats as constraints on the implementation
 
 ---
 
@@ -126,8 +129,8 @@ Rate each identified threat on two axes:
 **Action thresholds:**
 
 - **Critical** — must be mitigated before shipping. Block the implementation plan.
-- **High** — must be mitigated before shipping. Add as constraints in `/plan`.
-- **Medium** — should be mitigated. Add as tasks in `/plan` if feasible.
+- **High** — must be mitigated before shipping. Add as constraints in `/ag-plan`.
+- **Medium** — should be mitigated. Add as tasks in `/ag-plan` if feasible.
 - **Low** — document and accept, or address opportunistically.
 - **Info** — document for awareness only.
 
@@ -157,15 +160,15 @@ For Medium threats, propose mitigations but mark them as "recommended, not block
 
 Save to `docs/airgap/threats/YYYY-MM-DD-<topic>-threat-model.md`. Use today's date and a descriptive topic slug. Commit to git.
 
-### Step 7: Hand Off to /plan
+### Step 7: Hand Off to /ag-plan
 
-Present the threat model to the user, then hand off to `/plan` with this framing:
+Present the threat model to the user, then hand off to `/ag-plan` with this framing:
 
 > "Threat model complete and saved to `<path>`. The following threats are constraints on the implementation plan:"
 >
 > - [List Critical and High threats with their mitigations]
 >
-> "Ready to proceed to `/plan`?"
+> "Ready to proceed to `/ag-plan`?"
 
 ---
 
@@ -223,7 +226,7 @@ The saved document must follow this structure:
 | Low | N | Accept |
 | Info | N | Awareness only |
 
-## Mitigations for /plan
+## Mitigations for /ag-plan
 
 These threats MUST be addressed as constraints in the implementation plan:
 
@@ -274,10 +277,10 @@ Use these as a checklist when evaluating entry points. Not every pattern applies
 
 ## Integration
 
-- **Slots between `/design` and `/plan`.** Run `/threat-model` after the design spec is written and approved, before writing the implementation plan.
+- **Slots between `/design` and `/ag-plan`.** Run `/threat-model` after the design spec is written and approved, before writing the implementation plan.
 - **Input:** a design spec from `/design` (in `docs/airgap/specs/`) or a user-provided feature description.
-- **Output:** a threat model document in `docs/airgap/threats/` and a list of constraints for `/plan`.
-- **The `/plan` command receives Critical and High threats as hard constraints** that must be addressed in the implementation plan.
+- **Output:** a threat model document in `docs/airgap/threats/` and a list of constraints for `/ag-plan`.
+- **The `/ag-plan` command receives Critical and High threats as hard constraints** that must be addressed in the implementation plan.
 - This command can also be invoked independently on any existing system or feature for a standalone security review.
 
 ---
@@ -288,7 +291,7 @@ Use these as a checklist when evaluating entry points. Not every pattern applies
 - **Never rate all threats as Low.** If everything looks low-risk, you are probably not looking hard enough. Re-examine your assumptions.
 - **Never propose vague mitigations.** "Improve security" is not a mitigation. Every mitigation must be specific and actionable.
 - **Never ignore the trust boundaries.** Most serious vulnerabilities occur at trust boundaries. If you identified fewer than two boundaries, revisit Step 2.
-- **Never skip the handoff to `/plan`.** The whole point of threat modeling is to influence the implementation. A threat model that doesn't feed into the plan is documentation theater.
+- **Never skip the handoff to `/ag-plan`.** The whole point of threat modeling is to influence the implementation. A threat model that doesn't feed into the plan is documentation theater.
 - **Never treat this as a one-time activity.** When the design changes significantly, re-run `/threat-model` on the affected areas.
 
 ---

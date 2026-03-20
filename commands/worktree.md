@@ -1,3 +1,6 @@
+---
+description: Create isolated git worktrees for safe parallel feature work
+---
 <!-- v1.0 -->
 # Git Worktree Isolation
 

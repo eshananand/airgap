@@ -1,3 +1,6 @@
+---
+description: Evidence-based verification — no completion claims without proof
+---
 <!-- v1.0 -->
 # Verification Before Completion
 

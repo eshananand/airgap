@@ -1,3 +1,6 @@
+---
+description: Pre-deploy go/no-go gate orchestrating verify, scan-secrets, and audit-deps
+---
 <!-- v1.0 -->
 # Pre-Deployment Preflight Check
 

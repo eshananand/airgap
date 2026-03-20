@@ -1,3 +1,6 @@
+---
+description: Subagent-driven plan execution with two-stage review per task
+---
 <!-- v1.0 -->
 # Subagent-Driven Development
 
@@ -13,12 +16,12 @@
 
 Follow this decision logic:
 
-1. **Do you have an implementation plan?** → If no, use `/plan` first.
+1. **Do you have an implementation plan?** → If no, use `/ag-plan` first.
 2. **Are tasks mostly independent?** → If tightly coupled (each task deeply depends on the previous task's internal decisions), consider manual implementation instead.
 3. **Staying in this session?** → Use `/implement`. If you want parallel sessions across worktrees, use `/execute` in each.
 
 ```
-Have plan? ──no──→ /plan first
+Have plan? ──no──→ /ag-plan first
   │yes
   ▼
 Tasks mostly independent? ──no──→ Manual implementation
@@ -346,6 +349,6 @@ Never do any of the following:
 | Command | Relationship |
 |---|---|
 | `/worktree` | Create an isolated worktree before starting, so implementation happens on a clean branch. |
-| `/plan` | Creates the implementation plan that `/implement` executes. |
-| `/review` | Provides the code review template used by the quality reviewer subagent. |
+| `/ag-plan` | Creates the implementation plan that `/implement` executes. |
+| `/ag-review` | Provides the code review template used by the quality reviewer subagent. |
 | `/finish` | Called after all tasks pass review to complete the branch (tests, PR, cleanup). |

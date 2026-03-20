@@ -1,7 +1,10 @@
+---
+description: Spec to implementation plan with atomic tasks, file mappings, and dependency ordering
+---
 <!-- v1.0 -->
 # Writing Implementation Plans
 
-> **Announcement:** I'm using /plan to create the implementation plan.
+> **Announcement:** I'm using /ag-plan to create the implementation plan.
 
 ## Overview
 
