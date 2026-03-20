@@ -60,7 +60,7 @@ Already prefixed (no change): `ag-plan.md`, `ag-review.md`, `ag-security-review.
 | `ag-review.md` | `/implement` → `/ag-implement`, `/execute` → `/ag-execute` |
 | `ag-debug.md` | `/test` → `/ag-test`, `/verify` → `/ag-verify` |
 | `ag-test.md` | `/verify` → `/ag-verify` |
-| `ag-design.md` | `/threat-model` → `/ag-threat-model` |
+| `ag-design.md` | (no changes needed — already references `/ag-plan`) |
 | `ag-execute.md` | `/worktree` → `/ag-worktree`, `/finish` → `/ag-finish` |
 | `ag-implement.md` | `/worktree` → `/ag-worktree`, `/finish` → `/ag-finish` |
 | `ag-finish.md` | `/worktree` → `/ag-worktree` |
@@ -72,6 +72,7 @@ Already prefixed (no change): `ag-plan.md`, `ag-review.md`, `ag-security-review.
 | `ag-worktree.md` | `/implement` → `/ag-implement`, `/execute` → `/ag-execute`, `/finish` → `/ag-finish` |
 | `ag-scan-secrets.md` | `/preflight` → `/ag-preflight`, `/finish` → `/ag-finish` |
 | `ag-activate.md` | Full routing table — all command references updated to `ag-` prefix |
+| `ag-deactivate.md` | `/debug` → `/ag-debug`, `/test` → `/ag-test`, `/activate` → `/ag-activate` (in confirmation message) |
 
 #### Non-command files
 
@@ -81,7 +82,7 @@ Already prefixed (no change): `ag-plan.md`, `ag-review.md`, `ag-security-review.
 
 #### No changes needed
 
-- `ag-receive-review.md`, `ag-deactivate.md`, `ag-parallel.md`, `ag-verify.md`, `ag-new-skill.md` — no cross-references
+- `ag-receive-review.md`, `ag-parallel.md`, `ag-verify.md`, `ag-new-skill.md` — no cross-references
 - `agents/code-reviewer.md`, `install.sh` — no command references
 
 ## Verification
