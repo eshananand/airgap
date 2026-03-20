@@ -84,7 +84,7 @@ Every plan document starts with this header template:
 ```markdown
 # [Feature Name] Implementation Plan
 
-> **For agentic workers:** Use /implement (recommended) or /execute to implement this plan task-by-task. Steps use checkbox syntax for tracking.
+> **For agentic workers:** Use /ag-implement (recommended) or /ag-execute to implement this plan task-by-task. Steps use checkbox syntax for tracking.
 
 **Goal:** [One sentence describing what this plan delivers]
 **Architecture:** [2-3 sentences describing the high-level approach, key design decisions, and how components interact]
@@ -189,8 +189,8 @@ After saving the plan and receiving reviewer approval, present the user with a c
 ```
 Plan complete and saved to `docs/airgap/plans/<filename>.md`. Two execution options:
 
-1. **Subagent-Driven (/implement)** — fresh subagent per task, review between tasks, fast iteration (recommended)
-2. **Inline Execution (/execute)** — execute tasks in this session with checkpoints
+1. **Subagent-Driven (/ag-implement)** — fresh subagent per task, review between tasks, fast iteration (recommended)
+2. **Inline Execution (/ag-execute)** — execute tasks in this session with checkpoints
 
 Which approach?
 ```

@@ -22,4 +22,4 @@ description: Remove airgap auto-activation from the current project
 
 5. **Confirm deactivation** — Tell the user:
 
-> Airgap auto-routing has been removed from this project. Slash commands (`/debug`, `/test`, etc.) are still available — only the automatic routing has been disabled. Run `/activate` to re-enable.
+> Airgap auto-routing has been removed from this project. Slash commands (`/ag-debug`, `/ag-test`, etc.) are still available — only the automatic routing has been disabled. Run `/ag-activate` to re-enable.

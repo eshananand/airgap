@@ -201,6 +201,6 @@ git worktree list
 
 ## Integration
 
-- Called by `/implement` and `/execute` after all tasks are complete.
-- Pairs with `/worktree` for worktree lifecycle management.
+- Called by `/ag-implement` and `/ag-execute` after all tasks are complete.
+- Pairs with `/ag-worktree` for worktree lifecycle management.
 - This command is self-contained and can be invoked independently.

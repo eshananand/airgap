@@ -14,7 +14,7 @@ Code review is not a gate at the end — it is a continuous practice that catche
 
 ### Mandatory
 
-- **After each task in /implement** — review before moving to the next task
+- **After each task in /ag-implement** — review before moving to the next task
 - **After completing a major feature** — review the full feature before declaring it done
 - **Before merge to main** — no code reaches main without review
 
@@ -195,11 +195,11 @@ Here is a typical review cycle after completing a task:
 
 ## Integration with Other Commands
 
-### /implement
-Review is built into the /implement loop. After completing each task, request a review before moving to the next task. This catches issues early when context is fresh.
+### /ag-implement
+Review is built into the /ag-implement loop. After completing each task, request a review before moving to the next task. This catches issues early when context is fresh.
 
-### /execute
-When running parallel tasks via /execute, request review after each batch completes. Review the combined output of the batch before starting the next one.
+### /ag-execute
+When running parallel tasks via /ag-execute, request review after each batch completes. Review the combined output of the batch before starting the next one.
 
 ### Ad-hoc
 Use /ag-review any time outside of structured workflows:

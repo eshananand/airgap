@@ -379,7 +379,7 @@ Before considering any feature, fix, or change complete, confirm:
 - [ ] Tests use real code, not mocks (unless external dependencies require it)
 - [ ] Edge cases are covered (empty input, null, boundaries, error conditions)
 
-Use `/verify` to confirm the full cycle was followed correctly.
+Use `/ag-verify` to confirm the full cycle was followed correctly.
 
 ---
 

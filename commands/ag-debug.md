@@ -326,5 +326,5 @@ Replace arbitrary timeouts (`sleep 5`) with condition polling. Instead of hoping
 
 ## Related Commands
 
-- `/test` — Use for creating the failing test case required in Phase 4
-- `/verify` — Use for confirming the fix resolves the issue without regressions
+- `/ag-test` — Use for creating the failing test case required in Phase 4
+- `/ag-verify` — Use for confirming the fix resolves the issue without regressions

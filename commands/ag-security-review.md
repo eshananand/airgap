@@ -445,7 +445,7 @@ There is no conflict in running them on the same code. They look for different t
 
 ### With /implement
 
-During `/implement`, consider running `/ag-security-review` after tasks that touch:
+During `/ag-implement`, consider running `/ag-security-review` after tasks that touch:
 - Authentication or authorization logic
 - User input handling
 - Database queries
@@ -456,9 +456,9 @@ During `/implement`, consider running `/ag-security-review` after tasks that tou
 
 When creating a plan with `/ag-plan`, include security requirements in the plan itself. This makes security part of the design rather than an afterthought.
 
-### With /verify
+### With /ag-verify
 
-After fixing security findings, use `/verify` to confirm the fixes pass tests and do not break functionality before re-running `/ag-security-review`.
+After fixing security findings, use `/ag-verify` to confirm the fixes pass tests and do not break functionality before re-running `/ag-security-review`.
 
 ---
 
