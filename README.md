@@ -2,7 +2,7 @@
 
 Zero-dependency engineering workflows for Claude Code. Nothing leaves your machine.
 
-**19 commands** · **1 agent** · **0 external dependencies**
+**21 commands** · **1 agent** · **0 external dependencies**
 
 ---
 
@@ -20,6 +20,26 @@ git clone <repo> && cd airgap
 ```
 
 The installer copies commands to `~/.claude/commands/` and agents to `~/.claude/agents/`. Changes are live on the next Claude Code session.
+
+## Auto-Activation
+
+By default, airgap commands are available as slash commands (`/debug`, `/test`, etc.). To make airgap workflows trigger automatically from natural language — so "debug this bug" uses the `/debug` workflow instead of Claude's default approach — activate it per-project:
+
+```
+cd /path/to/your-project
+claude
+> /activate
+```
+
+This creates a `.claude/CLAUDE.md` in your project with intent-routing rules. From then on, Claude automatically recognizes when your request maps to an airgap workflow and invokes it.
+
+To remove auto-activation from a project:
+
+```
+> /deactivate
+```
+
+This removes the airgap routing section from your project's CLAUDE.md, preserving any other content.
 
 ## Commands
 
@@ -60,6 +80,8 @@ The installer copies commands to `~/.claude/commands/` and agents to `~/.claude/
 
 | Command | Description |
 |---------|-------------|
+| `/activate` | Enables auto-activation for the current project. Creates `.claude/CLAUDE.md` with intent-routing rules so airgap workflows trigger from natural language. |
+| `/deactivate` | Removes auto-activation from the current project. Cleanly removes the airgap routing section from `.claude/CLAUDE.md`. |
 | `/new-skill` | Creates new custom commands following Airgap conventions. Drafts, tests against a synthetic scenario, then writes and indexes. |
 
 ## Agent
@@ -80,6 +102,11 @@ Commands are designed to flow into each other:
 /audit-deps → /preflight → /finish
 /postmortem → action items → /plan
 /worktree → [feature work] → /finish
+
+# With auto-activation (/activate):
+"debug this bug" → auto-invokes /debug workflow
+"write tests"    → auto-invokes /test workflow
+"review my code" → auto-invokes /review workflow
 ```
 
 ## How It Works

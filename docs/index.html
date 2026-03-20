@@ -339,13 +339,16 @@
 <body>
 
 <div class="hero">
-  <div class="hero-badge">v2.0 &mdash; 19 commands + 1 agent</div>
+  <div class="hero-badge">v2.1 &mdash; 21 commands + 1 agent</div>
   <h1><span>Airgap</span></h1>
   <p class="tagline">Zero-dependency engineering workflows for Claude Code. Nothing leaves your machine.</p>
 
   <div class="install-block">
     <span class="prompt">$</span> git clone &lt;repo&gt; &amp;&amp; cd airgap<br>
-    <span class="prompt">$</span> ./install.sh
+    <span class="prompt">$</span> ./install.sh<br>
+    <br>
+    <span class="prompt"># then, in any project:</span><br>
+    <span class="prompt">&gt;</span> /activate
   </div>
 
   <div class="hero-features">
@@ -363,6 +366,32 @@
     <h3>Air-Gapped by Design</h3>
     <p>Every command is a self-contained markdown file. No network calls, no plugin infrastructure, no data exfiltration. Your code, your context, your machine. Copy two directories to deploy anywhere.</p>
   </div>
+
+  <!-- Auto-Activation -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Auto-Activation</h2>
+      <p>Say what you mean &mdash; airgap picks the right workflow</p>
+    </div>
+    <div class="chain-section" style="margin-top: 0;">
+      <h3>How it works</h3>
+      <div class="chain-flow">
+        <span class="prompt" style="color: var(--text-dim);">1.</span> Install airgap: <span class="cmd">./install.sh</span><br>
+        <span class="prompt" style="color: var(--text-dim);">2.</span> Open any project: <span class="cmd">cd my-project && claude</span><br>
+        <span class="prompt" style="color: var(--text-dim);">3.</span> Activate: <span class="cmd">/activate</span><br>
+        <span class="prompt" style="color: var(--text-dim);">4.</span> Just talk naturally:<br>
+        <br>
+        <span style="color: var(--text-dim);">&ldquo;debug this bug&rdquo;</span> <span class="arrow">&rarr;</span> <span class="cmd">/debug</span> workflow<br>
+        <span style="color: var(--text-dim);">&ldquo;write tests for this&rdquo;</span> <span class="arrow">&rarr;</span> <span class="cmd">/test</span> workflow<br>
+        <span style="color: var(--text-dim);">&ldquo;review my code&rdquo;</span> <span class="arrow">&rarr;</span> <span class="cmd">/review</span> workflow<br>
+        <span style="color: var(--text-dim);">&ldquo;is this ready to deploy?&rdquo;</span> <span class="arrow">&rarr;</span> <span class="cmd">/preflight</span> workflow<br>
+        <span style="color: var(--text-dim);">&ldquo;scan for leaked secrets&rdquo;</span> <span class="arrow">&rarr;</span> <span class="cmd">/scan-secrets</span> workflow<br>
+      </div>
+      <p style="margin-top: 16px; font-size: 13px; color: var(--text-dim);">Creates a <code style="color: var(--accent);">.claude/CLAUDE.md</code> in your project with intent-routing rules. Explicit <code style="color: var(--accent);">/command</code> invocation always takes priority. Run <span class="cmd">/deactivate</span> to remove.</p>
+    </div>
+  </div>
+
+  <hr class="section-divider">
 
   <!-- Core Workflow -->
   <div class="section">
@@ -621,6 +650,30 @@
 
       <div class="card">
         <div class="card-header">
+          <div class="card-icon cyan">&#x26a1;</div>
+          <div class="card-name">/activate</div>
+        </div>
+        <div class="card-desc">Enables auto-activation for the current project. Creates a .claude/CLAUDE.md with intent-routing rules so airgap workflows trigger automatically from natural language instead of requiring explicit slash commands.</div>
+        <div class="card-tags">
+          <span class="tag">per-project</span>
+          <span class="tag">CLAUDE.md routing</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon cyan">&#x23fb;</div>
+          <div class="card-name">/deactivate</div>
+        </div>
+        <div class="card-desc">Removes auto-activation from the current project. Cleanly removes the airgap routing section from .claude/CLAUDE.md, preserving any other content in the file.</div>
+        <div class="card-tags">
+          <span class="tag">clean removal</span>
+          <span class="tag">preserves user content</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
           <div class="card-icon cyan">&#x1f527;</div>
           <div class="card-name">/new-skill</div>
         </div>
@@ -678,7 +731,7 @@
 
 <div class="footer">
   <p>Airgap &mdash; Zero-dependency engineering workflows for Claude Code</p>
-  <p style="margin-top: 8px;">19 commands &bull; 1 agent &bull; 0 external dependencies</p>
+  <p style="margin-top: 8px;">21 commands &bull; 1 agent &bull; 0 external dependencies</p>
 </div>
 
 </body>

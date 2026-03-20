@@ -137,7 +137,8 @@ This allows:
 | File | Change |
 |---|---|
 | `install.sh` | Add activate/deactivate to the list of installed commands (automatic — they're .md files in commands/) |
-| `README.md` | Document the auto-activation feature and /activate command |
+| `README.md` | Document the auto-activation feature, /activate and /deactivate commands, update command count to 21 |
+| `docs/index.html` | Add auto-activation section, /activate and /deactivate cards, update badge and footer to 21 commands |
 
 ## What This Does NOT Change
 
