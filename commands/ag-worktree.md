@@ -4,7 +4,7 @@ description: Create isolated git worktrees for safe parallel feature work
 <!-- v1.0 -->
 # Git Worktree Isolation
 
-> I'm using /worktree to set up an isolated workspace.
+> I'm using /ag-worktree to set up an isolated workspace.
 
 **Core principle:** Systematic directory selection + safety verification = reliable isolation.
 
@@ -151,5 +151,5 @@ Run the project's test suite.
 
 ## Integration
 
-- Called by `/implement` and `/execute` before starting feature work.
-- Pairs with `/finish` for worktree cleanup after work is complete.
+- Called by `/ag-implement` and `/ag-execute` before starting feature work.
+- Pairs with `/ag-finish` for worktree cleanup after work is complete.

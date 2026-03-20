@@ -4,9 +4,9 @@ description: Inline plan execution with review gates and progress tracking
 <!-- v1.0 -->
 # Executing Plans
 
-> I'm using /execute to implement this plan.
+> I'm using /ag-execute to implement this plan.
 
-**Note:** If subagent support is available, prefer `/implement` for higher quality output — it dispatches fresh subagents per task with review gates between them.
+**Note:** If subagent support is available, prefer `/ag-implement` for higher quality output — it dispatches fresh subagents per task with review gates between them.
 
 **Overview:** Load the plan, review it critically, execute all tasks in sequence, and report when complete.
 
@@ -38,7 +38,7 @@ Then move to the next task. Repeat until all tasks are done.
 
 After all tasks are verified complete:
 
-- Use `/finish` to complete the branch.
+- Use `/ag-finish` to complete the branch.
 - Follow that command's process: verify tests, present options, execute the user's choice.
 
 ---
@@ -72,12 +72,12 @@ Do not force through blockers. If the plan is wrong, fix the plan first.
 - **Follow plan steps exactly.** The plan was written with specific ordering and granularity for a reason.
 - **Do not skip verifications.** Every test run and expected output check exists to catch problems early.
 - **Stop when blocked — do not guess.** A wrong guess in task 3 can invalidate tasks 4 through 10.
-- **Never start work on main/master without explicit user consent.** Use `/worktree` to create an isolated branch first.
+- **Never start work on main/master without explicit user consent.** Use `/ag-worktree` to create an isolated branch first.
 
 ---
 
 ## Integration
 
-- **Requires `/worktree`** — create an isolated workspace before starting execution.
+- **Requires `/ag-worktree`** — create an isolated workspace before starting execution.
 - **Requires `/ag-plan`** — this command executes plans created by `/ag-plan`.
-- **Calls `/finish`** — after all tasks are complete, hand off to `/finish` for branch completion.
+- **Calls `/ag-finish`** — after all tasks are complete, hand off to `/ag-finish` for branch completion.

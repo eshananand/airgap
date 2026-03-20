@@ -4,7 +4,7 @@ description: Subagent-driven plan execution with two-stage review per task
 <!-- v1.0 -->
 # Subagent-Driven Development
 
-> **Announcement:** I'm using /implement to execute this plan with subagent-driven development.
+> **Announcement:** I'm using /ag-implement to execute this plan with subagent-driven development.
 
 **Overview:** Execute an implementation plan by dispatching a fresh subagent for each task. Every task goes through a two-stage review gate — spec compliance first, then code quality — before moving on. This produces high-quality, well-tested code with natural checkpoints.
 
@@ -18,7 +18,7 @@ Follow this decision logic:
 
 1. **Do you have an implementation plan?** → If no, use `/ag-plan` first.
 2. **Are tasks mostly independent?** → If tightly coupled (each task deeply depends on the previous task's internal decisions), consider manual implementation instead.
-3. **Staying in this session?** → Use `/implement`. If you want parallel sessions across worktrees, use `/execute` in each.
+3. **Staying in this session?** → Use `/ag-implement`. If you want parallel sessions across worktrees, use `/ag-execute` in each.
 
 ```
 Have plan? ──no──→ /ag-plan first
@@ -27,10 +27,10 @@ Have plan? ──no──→ /ag-plan first
 Tasks mostly independent? ──no──→ Manual implementation
   │yes
   ▼
-Stay in this session? ──no──→ /execute (in parallel worktrees)
+Stay in this session? ──no──→ /ag-execute (in parallel worktrees)
   │yes
   ▼
-/implement
+/ag-implement
 ```
 
 ---
@@ -62,7 +62,7 @@ After all tasks are complete:
 
 1. Dispatch a final code-reviewer for the entire implementation — all commits across all tasks.
 2. Address any issues found.
-3. Use `/finish` to complete the branch.
+3. Use `/ag-finish` to complete the branch.
 
 ---
 
@@ -246,7 +246,7 @@ If the quality reviewer reports issues:
 
 ## Example Workflow
 
-Here is an abbreviated walkthrough showing the rhythm of `/implement`:
+Here is an abbreviated walkthrough showing the rhythm of `/ag-implement`:
 
 ```
 ── Load plan (5 tasks) ──
@@ -301,7 +301,7 @@ Task 5: CLI entry point
   → Task 5 COMPLETE
 
 ── Final review: dispatch code-reviewer across all 5 tasks ──
-── /finish ──
+── /ag-finish ──
 ```
 
 ---
@@ -315,7 +315,7 @@ Task 5: CLI entry point
 - **Questions are OK** — subagents ask instead of guessing, catching ambiguity early.
 - **Two-stage review catches different bugs** — spec drift and code quality are separate concerns.
 
-### vs. /execute
+### vs. /ag-execute
 - **Same session** — you stay in control, no worktree setup needed.
 - **Continuous oversight** — you see every status report and review result.
 - **Automatic checkpoints** — every task has a commit and two review gates.
@@ -332,7 +332,7 @@ Never do any of the following:
 3. **Skip code quality review** — every task gets reviewed, no exceptions.
 4. **Proceed with unfixed spec issues** — spec must pass before quality review.
 5. **Proceed with unfixed quality issues** — quality must pass before marking complete.
-6. **Dispatch parallel implementers** — one task at a time, in order. Parallel execution is what `/execute` across worktrees is for.
+6. **Dispatch parallel implementers** — one task at a time, in order. Parallel execution is what `/ag-execute` across worktrees is for.
 7. **Make the subagent read the plan file** — paste the full task text into the prompt. The subagent should not need to find or interpret the plan.
 8. **Skip scene-setting context** — the Context section of the implementer prompt is not optional. The subagent needs to understand where this task fits.
 9. **Ignore implementer questions** — if they ask, answer. Do not tell them to figure it out.
@@ -348,7 +348,7 @@ Never do any of the following:
 
 | Command | Relationship |
 |---|---|
-| `/worktree` | Create an isolated worktree before starting, so implementation happens on a clean branch. |
-| `/ag-plan` | Creates the implementation plan that `/implement` executes. |
+| `/ag-worktree` | Create an isolated worktree before starting, so implementation happens on a clean branch. |
+| `/ag-plan` | Creates the implementation plan that `/ag-implement` executes. |
 | `/ag-review` | Provides the code review template used by the quality reviewer subagent. |
-| `/finish` | Called after all tasks pass review to complete the branch (tests, PR, cleanup). |
+| `/ag-finish` | Called after all tasks pass review to complete the branch (tests, PR, cleanup). |

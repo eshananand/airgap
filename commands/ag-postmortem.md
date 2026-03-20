@@ -339,7 +339,7 @@ Watch for these during the postmortem process. Each one indicates the analysis i
 ## Integration with Other Commands
 
 - **Action items requiring code changes** — hand off to `/ag-plan` with the postmortem as context
-- **Debugging during incident investigation** — use `/debug` for systematic root cause analysis
-- **Implementing fixes** — use `/implement` for the code changes identified in action items
-- **Verifying fixes** — use `/verify` to confirm action items are properly addressed
-- **Testing improvements** — use `/test` for new test coverage required by action items
+- **Debugging during incident investigation** — use `/ag-debug` for systematic root cause analysis
+- **Implementing fixes** — use `/ag-implement` for the code changes identified in action items
+- **Verifying fixes** — use `/ag-verify` to confirm action items are properly addressed
+- **Testing improvements** — use `/ag-test` for new test coverage required by action items

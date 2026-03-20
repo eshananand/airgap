@@ -219,17 +219,17 @@ Project license: <license>
 
 ## Integration with Other Commands
 
-### /preflight
-`/audit-deps` feeds directly into `/preflight`. When `/preflight` runs its pre-merge checks, it should invoke or reference the output of `/audit-deps`. Any CRITICAL or HIGH finding from `/audit-deps` is a `/preflight` blocker.
+### /ag-preflight
+`/ag-audit-deps` feeds directly into `/ag-preflight`. When `/ag-preflight` runs its pre-merge checks, it should invoke or reference the output of `/ag-audit-deps`. Any CRITICAL or HIGH finding from `/ag-audit-deps` is a `/ag-preflight` blocker.
 
 ### /ag-review
-License and security findings from `/audit-deps` should inform `/ag-review` when new dependencies are added. If a PR introduces a new dependency, `/audit-deps` findings for that package are review-relevant.
+License and security findings from `/ag-audit-deps` should inform `/ag-review` when new dependencies are added. If a PR introduces a new dependency, `/ag-audit-deps` findings for that package are review-relevant.
 
-### /implement
-During `/implement`, if a new dependency is added, run `/audit-deps` before proceeding to the next task. Catching a bad dependency mid-implementation is cheaper than catching it at merge time.
+### /ag-implement
+During `/ag-implement`, if a new dependency is added, run `/ag-audit-deps` before proceeding to the next task. Catching a bad dependency mid-implementation is cheaper than catching it at merge time.
 
 ### Standalone Use
-`/audit-deps` can be run at any time, independent of other workflows. Use it:
+`/ag-audit-deps` can be run at any time, independent of other workflows. Use it:
 - Before starting a new project (audit the starter template)
 - Periodically on long-running projects (monthly or quarterly)
 - After any `npm install` / `pip install` / `cargo add` / equivalent

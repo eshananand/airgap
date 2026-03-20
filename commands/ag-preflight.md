@@ -4,7 +4,7 @@ description: Pre-deploy go/no-go gate orchestrating verify, scan-secrets, and au
 <!-- v1.0 -->
 # Pre-Deployment Preflight Check
 
-> I'm using /preflight to run the go/no-go gate before deployment.
+> I'm using /ag-preflight to run the go/no-go gate before deployment.
 
 **Core principle:** No deployment proceeds with unresolved blockers. Evidence decides, not confidence.
 
@@ -15,9 +15,9 @@ description: Pre-deploy go/no-go gate orchestrating verify, scan-secrets, and au
 Execute each step in order. A failure at any step is a potential NO-GO.
 
 ```
-1. Run /verify           — do all tests pass with fresh evidence?
-2. Run /scan-secrets     — any credentials or secrets in the codebase?
-3. Run /audit-deps       — any critical CVEs in dependencies?
+1. Run /ag-verify           — do all tests pass with fresh evidence?
+2. Run /ag-scan-secrets     — any credentials or secrets in the codebase?
+3. Run /ag-audit-deps       — any critical CVEs in dependencies?
 4. Check breaking changes — are they documented?
 5. Check rollback plan   — does one exist and is it viable?
 6. Check environment configs — no dev/test values leaking into prod?
@@ -31,9 +31,9 @@ Do not skip steps. Do not reorder steps. Do not mark a step as passed without ex
 
 | # | Check Item | Status | Command / Action | Blocker? |
 |---|-----------|--------|-----------------|----------|
-| 1 | All tests pass | PENDING | `/verify` — run full suite, read output | YES if any fail |
-| 2 | No secrets in codebase | PENDING | `/scan-secrets` — scan all tracked files | YES if any found |
-| 3 | No critical dependency CVEs | PENDING | `/audit-deps` — check all dependencies | YES if critical/high CVEs |
+| 1 | All tests pass | PENDING | `/ag-verify` — run full suite, read output | YES if any fail |
+| 2 | No secrets in codebase | PENDING | `/ag-scan-secrets` — scan all tracked files | YES if any found |
+| 3 | No critical dependency CVEs | PENDING | `/ag-audit-deps` — check all dependencies | YES if critical/high CVEs |
 | 4 | Breaking changes documented | PENDING | Review changelog, migration guide, API docs | YES if undocumented |
 | 5 | Rollback plan exists | PENDING | Verify rollback procedure is written and tested | YES if missing |
 | 6 | Environment configs correct | PENDING | Validate prod configs, no dev values present | YES if misconfigured |
@@ -214,7 +214,7 @@ BLOCKERS (must resolve before deploy):
 2. [HIGH] Breaking change undocumented: /api/v2/users endpoint removed
    → Remediation: Write migration guide, update changelog, notify consumers
 
-Deployment is BLOCKED until all items resolved. Re-run /preflight after fixes.
+Deployment is BLOCKED until all items resolved. Re-run /ag-preflight after fixes.
 ```
 
 ---
@@ -233,7 +233,7 @@ Deployment is BLOCKED until all items resolved. Re-run /preflight after fixes.
 
 ## Integration
 
-- **Depends on:** `/verify` (test verification), `/scan-secrets` (secret detection), `/audit-deps` (dependency audit)
-- **Feeds into:** `/finish` — only proceed to finish/deploy after preflight returns GO
+- **Depends on:** `/ag-verify` (test verification), `/ag-scan-secrets` (secret detection), `/ag-audit-deps` (dependency audit)
+- **Feeds into:** `/ag-finish` — only proceed to finish/deploy after preflight returns GO
 - This command is self-contained and can be invoked independently at any time.
 - Re-run after any code change, even "small fixes." There are no small fixes before deployment.

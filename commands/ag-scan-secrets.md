@@ -4,7 +4,7 @@ description: Scan codebase for leaked credentials, API keys, and tokens
 <!-- v1.0 -->
 # Scan for Leaked Secrets
 
-> I'm using /scan-secrets to check for credentials before they reach git.
+> I'm using /ag-scan-secrets to check for credentials before they reach git.
 
 **Overview:** Scan the working directory for leaked credentials, API keys, tokens, private keys, and other secrets. Flag findings by severity, and hard-gate on definite leaks.
 
@@ -194,7 +194,7 @@ This gate cannot be overridden by the user within this command. The secrets must
 
 ## Integration Notes
 
-- **Feeds into `/preflight`** — the `/preflight` command should invoke `/scan-secrets` as one of its checks. A `SECRETS FOUND` result with any Definite findings fails the preflight gate.
-- **Can be run standalone** — use `/scan-secrets` at any time to audit the current state of the working directory.
-- **Pairs with `/finish`** — run before finalizing a branch to ensure no secrets ship.
+- **Feeds into `/ag-preflight`** — the `/ag-preflight` command should invoke `/ag-scan-secrets` as one of its checks. A `SECRETS FOUND` result with any Definite findings fails the preflight gate.
+- **Can be run standalone** — use `/ag-scan-secrets` at any time to audit the current state of the working directory.
+- **Pairs with `/ag-finish`** — run before finalizing a branch to ensure no secrets ship.
 - **After rotation** — if a secret was already committed, remind the user that removing it from HEAD is not enough. The secret exists in git history and must be scrubbed with `git filter-repo` or BFG, and the credential must be rotated.
