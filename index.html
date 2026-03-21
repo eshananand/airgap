@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Airgap — Zero-dependency engineering workflows for Claude Code</title>
+<style>
+  :root {
+    --bg: #0a0e17;
+    --surface: #111827;
+    --surface-hover: #1a2335;
+    --border: #1e293b;
+    --border-accent: #2563eb;
+    --text: #e2e8f0;
+    --text-dim: #94a3b8;
+    --text-bright: #f8fafc;
+    --accent: #3b82f6;
+    --accent-glow: rgba(59, 130, 246, 0.15);
+    --green: #22c55e;
+    --green-dim: rgba(34, 197, 94, 0.15);
+    --amber: #f59e0b;
+    --amber-dim: rgba(245, 158, 11, 0.15);
+    --red: #ef4444;
+    --red-dim: rgba(239, 68, 68, 0.15);
+    --purple: #a855f7;
+    --purple-dim: rgba(168, 85, 247, 0.15);
+    --cyan: #06b6d4;
+    --cyan-dim: rgba(6, 182, 212, 0.15);
+    --radius: 12px;
+    --font: 'SF Mono', 'Fira Code', 'Cascadia Code', 'JetBrains Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .hero {
+    text-align: center;
+    padding: 80px 24px 60px;
+    background: linear-gradient(180deg, rgba(59, 130, 246, 0.08) 0%, transparent 100%);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hero-badge {
+    display: inline-block;
+    padding: 6px 16px;
+    background: var(--accent-glow);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    border-radius: 20px;
+    font-family: var(--font);
+    font-size: 13px;
+    color: var(--accent);
+    margin-bottom: 24px;
+    letter-spacing: 0.5px;
+  }
+
+  .hero h1 {
+    font-size: clamp(48px, 8vw, 72px);
+    font-weight: 800;
+    color: var(--text-bright);
+    letter-spacing: -2px;
+    margin-bottom: 16px;
+    font-family: var(--font);
+  }
+
+  .hero h1 span {
+    background: linear-gradient(135deg, var(--accent), var(--cyan));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero .tagline {
+    font-size: 20px;
+    color: var(--text-dim);
+    max-width: 600px;
+    margin: 0 auto 32px;
+  }
+
+  .hero-features {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+    margin-top: 32px;
+  }
+
+  .hero-feature {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: var(--text-dim);
+  }
+
+  .hero-feature .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 8px rgba(34, 197, 94, 0.5);
+  }
+
+  .install-block {
+    max-width: 480px;
+    margin: 32px auto 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    font-family: var(--font);
+    font-size: 14px;
+    color: var(--green);
+    text-align: left;
+  }
+
+  .install-block .prompt { color: var(--text-dim); }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .section {
+    padding: 60px 0;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .section-header h2 {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--text-bright);
+    margin-bottom: 8px;
+  }
+
+  .section-header p {
+    font-size: 16px;
+    color: var(--text-dim);
+  }
+
+  .section-divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0;
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 20px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .card:hover {
+    border-color: var(--border-accent);
+    box-shadow: 0 0 24px var(--accent-glow);
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .card-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .card-icon.blue { background: var(--accent-glow); border: 1px solid rgba(59, 130, 246, 0.3); }
+  .card-icon.green { background: var(--green-dim); border: 1px solid rgba(34, 197, 94, 0.3); }
+  .card-icon.amber { background: var(--amber-dim); border: 1px solid rgba(245, 158, 11, 0.3); }
+  .card-icon.red { background: var(--red-dim); border: 1px solid rgba(239, 68, 68, 0.3); }
+  .card-icon.purple { background: var(--purple-dim); border: 1px solid rgba(168, 85, 247, 0.3); }
+  .card-icon.cyan { background: var(--cyan-dim); border: 1px solid rgba(6, 182, 212, 0.3); }
+
+  .card-name {
+    font-family: var(--font);
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-bright);
+  }
+
+  .card-name span {
+    color: var(--text-dim);
+    font-weight: 400;
+  }
+
+  .card-desc {
+    font-size: 14px;
+    color: var(--text-dim);
+    margin-bottom: 16px;
+    line-height: 1.7;
+  }
+
+  .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .tag {
+    font-family: var(--font);
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+  }
+
+  .tag.gate {
+    background: var(--red-dim);
+    border-color: rgba(239, 68, 68, 0.3);
+    color: var(--red);
+  }
+
+  .tag.chain {
+    background: var(--accent-glow);
+    border-color: rgba(59, 130, 246, 0.3);
+    color: var(--accent);
+  }
+
+  .agent-card {
+    background: linear-gradient(135deg, var(--surface), rgba(168, 85, 247, 0.05));
+    border: 1px solid rgba(168, 85, 247, 0.3);
+  }
+
+  .agent-card:hover {
+    border-color: var(--purple);
+    box-shadow: 0 0 24px var(--purple-dim);
+  }
+
+  .chain-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 32px;
+    margin-top: 48px;
+  }
+
+  .chain-section h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-bright);
+    margin-bottom: 20px;
+    font-family: var(--font);
+  }
+
+  .chain-flow {
+    font-family: var(--font);
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 2.2;
+  }
+
+  .chain-flow .cmd {
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .chain-flow .arrow {
+    color: var(--text-dim);
+    margin: 0 4px;
+  }
+
+  .chain-flow .optional {
+    color: var(--amber);
+    font-style: italic;
+  }
+
+  .privacy-banner {
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.08), rgba(6, 182, 212, 0.08));
+    border: 1px solid rgba(34, 197, 94, 0.2);
+    border-radius: var(--radius);
+    padding: 32px;
+    text-align: center;
+    margin: 48px 0;
+  }
+
+  .privacy-banner h3 {
+    font-size: 20px;
+    color: var(--green);
+    margin-bottom: 12px;
+  }
+
+  .privacy-banner p {
+    font-size: 14px;
+    color: var(--text-dim);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .footer {
+    text-align: center;
+    padding: 40px 24px;
+    border-top: 1px solid var(--border);
+    color: var(--text-dim);
+    font-size: 14px;
+  }
+
+  .footer a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  @media (max-width: 768px) {
+    .hero { padding: 48px 16px 40px; }
+    .cards { grid-template-columns: 1fr; }
+    .hero-features { flex-direction: column; align-items: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-badge">v2.1 &mdash; 21 commands + 1 agent</div>
+  <h1><span>Airgap</span></h1>
+  <p class="tagline">Zero-dependency engineering workflows for Claude Code. Nothing leaves your machine.</p>
+
+  <div class="install-block">
+    <span class="prompt">$</span> git clone &lt;repo&gt; &amp;&amp; cd airgap<br>
+    <span class="prompt">$</span> ./install.sh<br>
+    <br>
+    <span class="prompt"># then, in any project:</span><br>
+    <span class="prompt">&gt;</span> /activate
+  </div>
+
+  <div class="hero-features">
+    <div class="hero-feature"><div class="dot"></div> No internet required</div>
+    <div class="hero-feature"><div class="dot"></div> No plugin system</div>
+    <div class="hero-feature"><div class="dot"></div> No telemetry</div>
+    <div class="hero-feature"><div class="dot"></div> No external dependencies</div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- Privacy Banner -->
+  <div class="privacy-banner">
+    <h3>Air-Gapped by Design</h3>
+    <p>Every command is a self-contained markdown file. No network calls, no plugin infrastructure, no data exfiltration. Your code, your context, your machine. Copy two directories to deploy anywhere.</p>
+  </div>
+
+  <!-- Auto-Activation -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Auto-Activation</h2>
+      <p>Say what you mean &mdash; airgap picks the right workflow</p>
+    </div>
+    <div class="chain-section" style="margin-top: 0;">
+      <h3>How it works</h3>
+      <div class="chain-flow">
+        <span class="prompt" style="color: var(--text-dim);">1.</span> Install airgap: <span class="cmd">./install.sh</span><br>
+        <span class="prompt" style="color: var(--text-dim);">2.</span> Open any project: <span class="cmd">cd my-project && claude</span><br>
+        <span class="prompt" style="color: var(--text-dim);">3.</span> Activate: <span class="cmd">/activate</span><br>
+        <span class="prompt" style="color: var(--text-dim);">4.</span> Just talk naturally:<br>
+        <br>
+        <span style="color: var(--text-dim);">&ldquo;debug this bug&rdquo;</span> <span class="arrow">&rarr;</span> <span class="cmd">/debug</span> workflow<br>
+        <span style="color: var(--text-dim);">&ldquo;write tests for this&rdquo;</span> <span class="arrow">&rarr;</span> <span class="cmd">/test</span> workflow<br>
+        <span style="color: var(--text-dim);">&ldquo;review my code&rdquo;</span> <span class="arrow">&rarr;</span> <span class="cmd">/ag-review</span> workflow<br>
+        <span style="color: var(--text-dim);">&ldquo;is this ready to deploy?&rdquo;</span> <span class="arrow">&rarr;</span> <span class="cmd">/preflight</span> workflow<br>
+        <span style="color: var(--text-dim);">&ldquo;scan for leaked secrets&rdquo;</span> <span class="arrow">&rarr;</span> <span class="cmd">/scan-secrets</span> workflow<br>
+      </div>
+      <p style="margin-top: 16px; font-size: 13px; color: var(--text-dim);">Creates a <code style="color: var(--accent);">.claude/CLAUDE.md</code> in your project with intent-routing rules. Explicit <code style="color: var(--accent);">/command</code> invocation always takes priority. Run <span class="cmd">/deactivate</span> to remove.</p>
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- Core Workflow -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Core Workflow</h2>
+      <p>From idea to shipped code &mdash; structured, reviewed, and verified</p>
+    </div>
+    <div class="cards">
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon blue">&#x1f4a1;</div>
+          <div class="card-name">/design</div>
+        </div>
+        <div class="card-desc">Brainstorming &rarr; design &rarr; spec workflow. Guides a structured conversation from raw idea to approved design spec with clarifying questions, trade-off analysis, and iterative section approval.</div>
+        <div class="card-tags">
+          <span class="tag gate">Hard gate: no code before approval</span>
+          <span class="tag chain">&rarr; /threat-model &rarr; /ag-plan</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon blue">&#x1f4cb;</div>
+          <div class="card-name">/ag-plan</div>
+        </div>
+        <div class="card-desc">Takes an approved spec and produces a detailed implementation plan with atomic, bite-sized tasks. Includes file structure mapping, exact code, test commands, and dependency ordering.</div>
+        <div class="card-tags">
+          <span class="tag chain">&rarr; /execute or /implement</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon blue">&#x25b6;</div>
+          <div class="card-name">/execute</div>
+        </div>
+        <div class="card-desc">Inline plan execution with review gates. Executes each step sequentially, marking progress, summarizing at checkpoints, and surfacing blockers. Simpler alternative to /implement.</div>
+        <div class="card-tags">
+          <span class="tag chain">&rarr; /verify &rarr; /finish</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon blue">&#x1f916;</div>
+          <div class="card-name">/implement</div>
+        </div>
+        <div class="card-desc">Subagent-driven plan execution &mdash; the recommended method. Dispatches a fresh subagent per task with two-stage review: spec compliance first, then code quality. Inlines all prompt templates.</div>
+        <div class="card-tags">
+          <span class="tag chain">&rarr; /ag-review &rarr; /finish</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon blue">&#x1f50d;</div>
+          <div class="card-name">/ag-review</div>
+        </div>
+        <div class="card-desc">Manually triggers the code-reviewer agent for quality review. Identifies scope, provides context about what was built and which plan it implements, then iterates until clean.</div>
+        <div class="card-tags">
+          <span class="tag">max 3 iterations</span>
+          <span class="tag chain">&rarr; /finish</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon blue">&#x1f4e5;</div>
+          <div class="card-name">/receive-review</div>
+        </div>
+        <div class="card-desc">Technical rigor when handling incoming review feedback. READ &rarr; UNDERSTAND &rarr; VERIFY &rarr; EVALUATE &rarr; RESPOND &rarr; IMPLEMENT. No performative agreement &mdash; every suggestion gets evaluated.</div>
+        <div class="card-tags">
+          <span class="tag gate">Hard gate: no blind implementation</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon blue">&#x1f3c1;</div>
+          <div class="card-name">/finish</div>
+        </div>
+        <div class="card-desc">Structured branch completion. Presents exactly 4 options with trade-offs: merge locally, open a PR, keep as-is, or discard (with typed confirmation). Cleans up worktrees.</div>
+        <div class="card-tags">
+          <span class="tag">4 completion options</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- Safety & Security -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Safety &amp; Security</h2>
+      <p>Scan, model, review, and audit &mdash; before vulnerabilities ship</p>
+    </div>
+    <div class="cards">
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon red">&#x1f512;</div>
+          <div class="card-name">/scan-secrets</div>
+        </div>
+        <div class="card-desc">Scans your codebase for leaked credentials before they reach git. Detects API keys, tokens, passwords, private keys, and connection strings across all major cloud providers and services.</div>
+        <div class="card-tags">
+          <span class="tag gate">Hard gate: blocks on definite secrets</span>
+          <span class="tag chain">&rarr; /preflight</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon red">&#x1f6e1;</div>
+          <div class="card-name">/threat-model</div>
+        </div>
+        <div class="card-desc">STRIDE-based threat modeling. Maps assets, entry points, and trust boundaries, then systematically analyzes Spoofing, Tampering, Repudiation, Information Disclosure, DoS, and Elevation of Privilege.</div>
+        <div class="card-tags">
+          <span class="tag">likelihood &times; impact matrix</span>
+          <span class="tag chain">/design &rarr; here &rarr; /ag-plan</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon red">&#x1f6a8;</div>
+          <div class="card-name">/ag-security-review</div>
+        </div>
+        <div class="card-desc">OWASP Top 10 focused security code review. Hunts for injection, XSS, broken auth, access control issues, and more. Distinct from /ag-review which checks code quality.</div>
+        <div class="card-tags">
+          <span class="tag">CWE references</span>
+          <span class="tag">severity ratings</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon red">&#x2708;</div>
+          <div class="card-name">/preflight</div>
+        </div>
+        <div class="card-desc">Pre-deployment go/no-go gate. Orchestrates /verify, /scan-secrets, and /audit-deps into a single safety checklist. Checks for breaking changes, rollback plans, and environment configs.</div>
+        <div class="card-tags">
+          <span class="tag gate">Hard gate: NO-GO blocks deploy</span>
+          <span class="tag chain">&rarr; /finish</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon amber">&#x1f4dd;</div>
+          <div class="card-name">/postmortem</div>
+        </div>
+        <div class="card-desc">Structured, blameless incident analysis. Builds timelines, uses 5-Whys for root cause, separates contributing factors, and produces action items with owners, deadlines, and priorities.</div>
+        <div class="card-tags">
+          <span class="tag">blameless culture</span>
+          <span class="tag chain">action items &rarr; /ag-plan</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon amber">&#x1f4e6;</div>
+          <div class="card-name">/audit-deps</div>
+        </div>
+        <div class="card-desc">Dependency vulnerability and license audit. Detects package managers automatically, checks for known CVE patterns, typosquatting indicators, and license incompatibilities.</div>
+        <div class="card-tags">
+          <span class="tag">multi-ecosystem</span>
+          <span class="tag chain">&rarr; /preflight</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- Development Discipline -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Development Discipline</h2>
+      <p>Guardrails that enforce engineering rigor at every step</p>
+    </div>
+    <div class="cards">
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon green">&#x1f41b;</div>
+          <div class="card-name">/debug</div>
+        </div>
+        <div class="card-desc">Systematic 4-phase debugging: Root Cause Investigation, Pattern Analysis, Hypothesis Testing, Implementation. Forces root-cause analysis before any fix attempt. Questions architecture at 3+ failures.</div>
+        <div class="card-tags">
+          <span class="tag gate">Hard gate: no fix before root cause</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon green">&#x1f9ea;</div>
+          <div class="card-name">/test</div>
+        </div>
+        <div class="card-desc">TDD red-green-refactor discipline. No production code without a failing test first. Includes rationalization prevention table, red flags list, and verification checklist.</div>
+        <div class="card-tags">
+          <span class="tag gate">Hard gate: test before code</span>
+          <span class="tag chain">&rarr; /verify</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon green">&#x2705;</div>
+          <div class="card-name">/verify</div>
+        </div>
+        <div class="card-desc">Evidence-based verification. No completion claims without fresh verification evidence. Runs tests, linters, type checkers, and confirms all acceptance criteria are met.</div>
+        <div class="card-tags">
+          <span class="tag gate">Hard gate: evidence before claims</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon green">&#x1f333;</div>
+          <div class="card-name">/worktree</div>
+        </div>
+        <div class="card-desc">Creates isolated git worktrees for feature work. Smart directory selection, safety verification, and auto-detects project setup. Never creates worktrees on main/master.</div>
+        <div class="card-tags">
+          <span class="tag">git isolation</span>
+          <span class="tag chain">&rarr; [work] &rarr; /finish</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon green">&#x26a1;</div>
+          <div class="card-name">/parallel</div>
+        </div>
+        <div class="card-desc">Decomposes independent tasks into parallel subagents. Only parallelizes truly independent work &mdash; sequential dependencies stay sequential. Collects and integrates results.</div>
+        <div class="card-tags">
+          <span class="tag">independence required</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- Meta -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Meta</h2>
+      <p>Extend Airgap with your own commands</p>
+    </div>
+    <div class="cards">
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon cyan">&#x26a1;</div>
+          <div class="card-name">/activate</div>
+        </div>
+        <div class="card-desc">Enables auto-activation for the current project. Creates a .claude/CLAUDE.md with intent-routing rules so airgap workflows trigger automatically from natural language instead of requiring explicit slash commands.</div>
+        <div class="card-tags">
+          <span class="tag">per-project</span>
+          <span class="tag">CLAUDE.md routing</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon cyan">&#x23fb;</div>
+          <div class="card-name">/deactivate</div>
+        </div>
+        <div class="card-desc">Removes auto-activation from the current project. Cleanly removes the airgap routing section from .claude/CLAUDE.md, preserving any other content in the file.</div>
+        <div class="card-tags">
+          <span class="tag">clean removal</span>
+          <span class="tag">preserves user content</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon cyan">&#x1f527;</div>
+          <div class="card-name">/new-skill</div>
+        </div>
+        <div class="card-desc">Creates new custom command files following Airgap conventions. Drafts the command, tests it with a subagent against a synthetic scenario, then writes and indexes it.</div>
+        <div class="card-tags">
+          <span class="tag">self-contained output</span>
+          <span class="tag">README index</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- Agent -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Agent</h2>
+      <p>The shared review engine dispatched by multiple commands</p>
+    </div>
+    <div class="cards">
+
+      <div class="card agent-card">
+        <div class="card-header">
+          <div class="card-icon purple">&#x1f916;</div>
+          <div class="card-name">code-reviewer <span>(agent)</span></div>
+        </div>
+        <div class="card-desc">General-purpose review agent dispatched by /ag-review, /design, /ag-plan, /implement, and /ag-security-review. Context passed at dispatch time determines what it reviews: spec, plan, code quality, or security.</div>
+        <div class="card-tags">
+          <span class="tag">4 review modes</span>
+          <span class="tag">APPROVED or ISSUES FOUND</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Command Chaining -->
+  <div class="chain-section">
+    <h3>Command Chaining</h3>
+    <div class="chain-flow">
+      <span class="cmd">/design</span> <span class="arrow">&rarr;</span> <span class="cmd optional">/threat-model</span> <span class="arrow">&rarr;</span> <span class="cmd">/ag-plan</span> <span class="arrow">&rarr;</span> <span class="cmd">/execute</span> or <span class="cmd">/implement</span><br>
+      <span class="cmd">/debug</span> <span class="arrow">&rarr;</span> fix <span class="arrow">&rarr;</span> <span class="cmd">/verify</span> <span class="arrow">&rarr;</span> <span class="cmd">/ag-review</span> <span class="arrow">&rarr;</span> <span class="cmd optional">/ag-security-review</span> <span class="arrow">&rarr;</span> <span class="cmd">/finish</span><br>
+      <span class="cmd">/test</span> <span class="arrow">&rarr;</span> <span class="cmd">/verify</span> <span class="arrow">&rarr;</span> <span class="cmd">/ag-review</span> <span class="arrow">&rarr;</span> <span class="cmd">/finish</span><br>
+      <span class="cmd">/scan-secrets</span> <span class="arrow">&rarr;</span> <span class="cmd">/preflight</span> <span class="arrow">&rarr;</span> <span class="cmd">/finish</span><br>
+      <span class="cmd">/audit-deps</span> <span class="arrow">&rarr;</span> <span class="cmd">/preflight</span> <span class="arrow">&rarr;</span> <span class="cmd">/finish</span><br>
+      <span class="cmd">/postmortem</span> <span class="arrow">&rarr;</span> action items <span class="arrow">&rarr;</span> <span class="cmd">/ag-plan</span><br>
+      <span class="cmd">/worktree</span> <span class="arrow">&rarr;</span> [feature work] <span class="arrow">&rarr;</span> <span class="cmd">/finish</span><br>
+    </div>
+    <p style="margin-top: 16px; font-size: 13px; color: var(--text-dim);"><em style="color: var(--amber);">Italic</em> commands are optional but recommended in the chain.</p>
+  </div>
+
+</div>
+
+<div class="footer">
+  <p>Airgap &mdash; Zero-dependency engineering workflows for Claude Code</p>
+  <p style="margin-top: 8px;">21 commands &bull; 1 agent &bull; 0 external dependencies</p>
+</div>
+
+</body>
+</html>
